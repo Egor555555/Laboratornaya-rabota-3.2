@@ -1,0 +1,40 @@
+//Дано число N (> 0) и набор из N чисел. Отсортировать исходный набор чисел, создав для него дерево поиска (алгоритм добавления вершин к дереву поиска описан в задании TreeWork12). 
+//Вывести указатель P1 на корень полученного дерева, а также отсортированный набор чисел (для вывода набора чисел выполнить перебор вершин дерева в инфиксном порядке).
+#include "pt4.h"
+using namespace std;
+void AddToTree(PNode& Tree, int data)
+{
+	if (!Tree) {
+		Tree = new TNode;
+		Tree->Data = data;
+		Tree->Left = NULL;
+		Tree->Right = NULL;
+		return;
+	}
+	if (data < Tree->Data)
+		AddToTree(Tree->Left, data);
+	else AddToTree(Tree->Right, data);
+}
+
+void Print(PNode& Tree)
+{
+	if (!Tree) return;
+	Print(Tree->Left);
+	pt << Tree->Data;
+	Print(Tree->Right);
+}
+
+void Solve()
+{
+	Task("TreeWork16");
+	int n, data;
+	PNode Tree;
+	Tree = NULL;
+	pt >> n;
+	for (int i = 0;i < n;i++) {
+		pt >> data;
+		AddToTree(Tree, data);
+	}
+	pt << Tree;
+	Print(Tree);
+}
